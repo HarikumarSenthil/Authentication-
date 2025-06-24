@@ -1,0 +1,24 @@
+const express = require('express');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+const { initializeDatabase } = require('./utils/db');
+const authRoutes = require('./routes/authRoutes');
+
+dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(morgan('dev'));
+
+app.use('/api/auth', authRoutes);
+
+app.get('/', (req, res) => res.send('Auth Backend Running'));
+
+initializeDatabase().then(() => {
+  app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+}).catch((err) => {
+  console.error('Database initialization failed:', err);
+});
