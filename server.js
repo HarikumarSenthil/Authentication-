@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://task-board-c99j.vercel.app'],
+  origin: true,
   credentials: true
 }));
 
